@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+var assert = require("assert");
 var mongoose = require('mongoose');
 var app = express();
 var ttn = require("ttn");
@@ -18,6 +19,10 @@ app.use("/bootstrap", express.static(__dirname + "/node_modules/bootstrap/dist")
 console.log(__dirname);
 
 //concetando o mongodb com o mongosse
+MongoClient.connect(null, function(err, db){
+    console.log("test the function");
+});
+
 
 //setting app
 app.use(bodyParser.json());
