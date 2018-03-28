@@ -1,11 +1,30 @@
+/** variaveis */
 var express = require("express");
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require("assert");
 var mongoose = require('mongoose');
-var app = express();
 var ttn = require("ttn");
 
+/** rotas */
+var routes = require('./routes/login');
+var routes = require('./routes/singup');
+var routes = require('./routes/home');
+var routes = require('./routes/settings');
+var routes = require('./routes/data_reading');
+var routes = require('./routes/error');
+
+var app = express();
+
+//configurando ejs 
+app.set('views', path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
+
+//set ttn
 var appID = "fox_lora_meter";
 var accessKey = "ttn-account-v2.RDViDzHErZlfgWGDdMNdNNme2WBVc7BPoxUXHdAr06I";
 
@@ -26,39 +45,6 @@ MongoClient.connect(null, function(err, db){
 //setting app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
-
-//setting ttn
-
-//configurando ejs 
-app.set("view engine", "ejs");
-
-//chamando a página inicial de login/singup
-app.get("/", function (req, res) {
-    res.render("login");
-});
-
-app.get("/singup", function(req,res){
-    res.render("singup");
-});
-//chamando a página princial
-app.get("/home", function(req,res){
-    res.render("home");
-});
-
-//chamando a data_reading
-app.get("/data", function(req,res){
-    res.render("data_reading");
-});
-
-//pagina de configuação do perfil do usário
-app.get("/setings", function(req,res){
-    res.render("setings");
-});
-
-//pagina de erro
-app.get("/error", function(req,res){
-    res.render("error");
-});
 
 //configurando para sair na porta 3000 (digite no console localhost:3000);
 var server = app.listen(3000, function () {
