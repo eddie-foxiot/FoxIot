@@ -23,7 +23,6 @@ MongoClient.connect(null, function(err, db){
     console.log("test the function");
 });
 
-
 //setting app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
